@@ -1020,7 +1020,8 @@ def input_loop(_list, _freq):
 
 # part 1
 
-print "PT1", input_loop(input_list, 0)[1]
+
+print("PT1", input_loop(input_list, 0)[1])
 
 # PART 2
 
@@ -1034,7 +1035,7 @@ while not found:
     for x in frequencies:
         cntr += 1
         if x in seen:
-            print x, cntr
+            print(x, cntr)
             found = True
             break
         else:

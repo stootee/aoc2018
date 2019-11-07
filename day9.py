@@ -1,36 +1,34 @@
 """429 players; last marble is worth 70901 points"""
+from collections import deque
 
-players = 13
-last_marble_value = 7999
+players = 429
+last_marble_value = 70901 * 100
 
-circle = [0]
+circle = deque([0])
+
+
+def move_pointer(_current, jumps=0):
+    idx = circle.index(_current)
+
+    new_idx = (idx + jumps) % len(circle)
+
+    return circle[new_idx], new_idx
 
 
 def place_marble(_marble_value, _current):
-    _index = circle.index(_current)
     _score = 0
 
     if _marble_value % 23 == 0:
-        if _index >= 7:
-            _index = _index - 7
-        else:
-            _index = len(circle) + (_index - 7)
+        _scoring_marble, _index = move_pointer(_current, -7)
 
-        _score = _marble_value + circle[_index]
+        _score = _marble_value + _scoring_marble
 
-        circle.pop(_index)
+        del circle[_index]
 
-        if _index + 1 == len(circle):
-            _current = circle[0]
-        else:
-            _current = circle[_index]
+        _current = circle[_index]
 
     else:
-        if _index + 1 == len(circle):
-            _index = 1
-        else:
-            _index = _index + 2
-
+        a, _index = move_pointer(_current, 2)
         circle.insert(_index, _marble_value)
         _current = _marble_value
 
@@ -46,14 +44,14 @@ for x in range(players):
 
 while marble_value <= last_marble_value:
     current, score, index = place_marble(marble_value, current)
-    # print(player, marble_value, current, score, circle)
     marble_value += 1
-    # if score > 0:
-    #     input("Player scored!!!! Enter to continue...")
     players_dict[player] += score
     player += 1
     if player > players:
         player = 1
+    perc_done = marble_value / last_marble_value * 100
+    if marble_value % 10000 == 0:
+        print(marble_value, marble_value / last_marble_value * 100)
 
 print(max(players_dict.values()))
 

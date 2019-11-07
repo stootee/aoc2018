@@ -31,7 +31,7 @@ for x in inp.split('\n'):
     if threes:
         thrice += 1
 
-print twice * thrice
+print(twice * thrice)
 
 # PART 2
 
@@ -43,7 +43,7 @@ for x in inp.split('\n'):
     for y in range(0, len(x)):
         test = x[:y] + x[y+1:]
         if (test, y) in new_set:
-            print test
+            print(test)
         else:
             new_set.add((test, y))
             #print (test, y)
